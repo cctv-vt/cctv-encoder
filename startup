@@ -1,0 +1,4 @@
+#!/bin/sh
+./notify /home/control/video-input/ &
+echo 'Encoder Started' &
+python3 main.py /home/control/video-input/ /home/control/video-output /home/gobolin/Documents/cctv-library/cctv/library/
