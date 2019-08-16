@@ -1,4 +1,7 @@
 #!/bin/sh
-./notify /home/control/video-input/ &
+#arg1: video input directory
+./notify /home/gobolin/video-input/ &
 echo 'Encoder Started' &
-python3 main.py /home/control/video-input/ /home/control/video-output /home/gobolin/Documents/cctv-library/cctv/library/
+
+#arg1:input directory (same as ./notify) arg2: video output arg3: google bucket mount point arg4: user who mounted the google bucket
+python3 main.py /home/gobolin/video-input/ /home/gobolin/video-output /home/gobolin/mock-google/ gobolin

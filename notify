@@ -1,5 +1,5 @@
 #!/bin/sh
-inotifywait -m $1 -e close_write |
+inotifywait -m $1 -e close_write -e moved_to |
     while read path action file; do
         echo "$file" >> queue.txt
         echo "$file is now in the queue."

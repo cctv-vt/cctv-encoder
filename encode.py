@@ -9,6 +9,7 @@ inpath = sys.argv[1]
 filename = sys.argv[2]
 outpathbase = sys.argv[3]
 googleout = sys.argv[4]
+googleuser = sys.argv[5]
 
 fullname = filename.strip('.mp4')
 year = fullname[-4:]
@@ -53,6 +54,6 @@ print('Month: ' + month)
 print('Day: ' + day)
 print('Year: ' + year)
 print('Filename: ' + name)
-subprocess.Popen(['sudo', '-u', 'gobolin','mkdir', '--parents',googleout + year + '/' + month + '/' + fullname ]).wait()
-subprocess.Popen(['sudo', '-u', 'gobolin','cp','-r', outpath , googleout + year + '/' + month + '/']).wait()
+subprocess.Popen(['sudo', '-u', googleuser,'mkdir', '--parents',googleout + year + '/' + month + '/' + fullname ]).wait()
+subprocess.Popen(['sudo', '-u', googleuser,'cp','-r', outpath , googleout + year + '/' + month + '/']).wait()
 print('Coppied to google bucket')

@@ -17,13 +17,15 @@ except:
 
 googleout = sys.argv[3]
 
+googleuser = sys.argv[4]
+
 while True:
   with open("queue.txt") as f:
     lines = f.readlines()
   if lines:
     line = lines[0].strip('\n')
     #print(line)
-    cmd = ['python3', 'encode.py', inpath, line, tempout, googleout]
+    cmd = ['python3', 'encode.py', inpath, line, tempout, googleout, googleuser]
     #Run the Encoder
     subprocess.Popen(cmd).wait()
     #Delete the file from Input folder
