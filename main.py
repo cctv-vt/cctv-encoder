@@ -1,9 +1,10 @@
 import sys
 import subprocess
 import time
+import logging
 
 
-
+logging.basicConfig(filename= 'cctv-encoder.log', filemode='a', level=logging.DEBUG, format='%(asctime)s:%(levelname)s: %(message)s')
 
 try:
   inpath = sys.argv[1]
@@ -27,17 +28,33 @@ while True:
     #print(line)
     cmd = ['python3', 'encode.py', inpath, line, tempout, googleout, googleuser]
     #Run the Encoder
-    subprocess.Popen(cmd).wait()
+    logging.info('Now encoding ' + line)
+    try:
+      subprocess.Popen(cmd).wait()
+      logging.debug('Finished encoding')
+    except:
+      logging.error('Could not encode')
+
     #Delete the file from Input folder
     #subprocess.Popen(['mv', tempout + line.strip('.mp4'), googleout + '/' + line.strip('.mp4')]).wait()
-    subprocess.Popen(['rm', inpath + line]).wait()
-    print('Removed from FTP')
+    logging.info('Removing ' + line + ' from ' + inpath)
+    try:
+      subprocess.Popen(['rm', inpath + line]).wait()
+      logging.debug('Removed')
+    except:
+      logging.error('Could not Remove')
+
     #Remove name from Queue
     with open("queue.txt") as f:
       lines = f.readlines()
-    with open("queue.txt", "w") as f:
-      f.writelines(lines[1:])
-    print("Removed from Queue")
+    logging.info('Removing ' + line + ' from Queue')
+    try:
+      with open("queue.txt", "w") as f:
+        f.writelines(lines[1:])
+        logging.debug('Removed')
+    except:
+        logging.debug('Could not remove')
+
   else:
     with open("queue.txt", "w") as f:
       f.writelines(lines[1:])
