@@ -36,6 +36,11 @@ ff = ffmpy.FFmpeg(
   outputs={ outpath + fullname + '.broadband.mp4': '-vf "scale=-2:720" -b:v 1M'}
 )
 
+try:
+  logging.info("Begin Encode")
+  ff.run()
+except:
+  logging.error('Failed to Encode Video')
 
 #THUMBNAILS
 probe = ffmpy.FFprobe(
@@ -57,6 +62,7 @@ thumb = ffmpy.FFmpeg(
  outputs={ outpath + fullname + '.%d.jpg' : ['-vf', 'scale=-2:540,fps=1/' + rate ], outpath + fullname + '.%d.tn.jpg' : ['-vf', 'fps=1/' + rate, '-s', '160x90' ]}
 )
 try:
+  logging.debug('Begin Thumbnail Encode')
   thumb.run()
 except:
   logging.error('Failed to create Thumbnails')
