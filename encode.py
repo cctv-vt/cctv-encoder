@@ -27,7 +27,17 @@ outpath = outpathbase + '/' + fullname + '/'
 
 os.makedirs(outpath,exist_ok=True)
 
+#PROBE
+probe = ffmpy.FFprobe(
+  global_options={"-loglevel quiet"},
+  inputs={ inpath+filename : "-print_format json -show_streams"}
+).run(stdout= subprocess.PIPE)
 
+
+
+probe_obj = json.loads(probe[0].decode('utf-8'))
+
+logging.info(probe_obj)
 
 #VIDEO
 ff = ffmpy.FFmpeg(
@@ -43,16 +53,7 @@ except:
   logging.error('Failed to Encode Video')
 
 #THUMBNAILS
-probe = ffmpy.FFprobe(
-  global_options={"-loglevel quiet"},
-  inputs={ inpath+filename : "-print_format json -show_streams"}
-).run(stdout= subprocess.PIPE)
 
-
-
-probe_obj = json.loads(probe[0].decode('utf-8'))
-
-logging.info(probe_obj)
 
 rate = str(math.floor((float(probe_obj['streams'][0]['duration'])/10)))
 
